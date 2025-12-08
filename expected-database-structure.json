@@ -1,0 +1,42 @@
+{
+  "tables": [
+    "products",
+    "orders",
+    "order_items"
+  ],
+  "products": {
+    "total": 4,
+    "items": [
+      {
+        "name": "特种兵精英套装",
+        "price": 4999,
+        "currency": "USD",
+        "category": "character_skin"
+      },
+      {
+        "name": "AK-47 烈焰战士皮肤",
+        "price": 2999,
+        "currency": "USD",
+        "category": "weapon_skin"
+      },
+      {
+        "name": "战斗通行证高级版",
+        "price": 1999,
+        "currency": "USD",
+        "category": "battle_pass"
+      },
+      {
+        "name": "钻石币大礼包",
+        "price": 999,
+        "currency": "USD",
+        "category": "currency"
+      }
+    ]
+  },
+  "indexes": [
+    "idx_orders_status",
+    "idx_orders_customer_email",
+    "idx_order_items_order_id",
+    "idx_products_category"
+  ]
+}
