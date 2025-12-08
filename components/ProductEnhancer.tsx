@@ -13,7 +13,9 @@ interface Product {
   currency: string;
   image_url: string;
   category: string;
+  in_stock: boolean;
   stripe_price_id?: string;
+  created_at: string;
 }
 
 interface ProductEnhancerProps {
