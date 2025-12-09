@@ -117,7 +117,7 @@ export async function PUT(
         error: error,
         details: error.message,
         code: error.code,
-        hints: error.hints,
+        hint: error.hint,
         details_key: 'details'
       });
 
