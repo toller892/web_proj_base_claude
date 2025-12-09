@@ -67,7 +67,7 @@ export default async function DashboardPage() {
               <div className="p-4 bg-gray-700 rounded-lg">
                 <p className="text-sm text-gray-400">最近登录</p>
                 <p className="font-medium text-white">
-                  {new Date(user.last_sign_in_at).toLocaleString('zh-CN')}
+                  {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString('zh-CN') : '未知'}
                 </p>
               </div>
             </div>
