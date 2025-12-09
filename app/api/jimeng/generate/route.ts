@@ -36,88 +36,28 @@ export async function POST(request: NextRequest) {
 
     console.log('Jimeng MCP - 生成图片，prompt:', enhancedPrompt);
 
-    try {
-      // 使用真实的MCP调用
-      const result = await mcp__jimeng__generate_image({
-        prompt: enhancedPrompt.trim(),
-        size: size,
-        scale: scale,
-        forceSingle: forceSingle
-      });
+    // MCP 功能暂时禁用，使用模拟图片
+    const localImagePath = await createMockImage(prompt);
+    const mockImageUrl = `/images/generated-products/${localImagePath}`;
 
-      console.log('Jimeng MCP 成功生成图片:', result);
-
-      // 处理返回结果并保存到本地
-      let imageUrl = '';
-      let base64Data = '';
-      let localImagePath = '';
-
-      if (result.type === 'base64' && result.source.source) {
-        // 提取base64数据
-        const base64Content = result.source.source;
-        base64Data = `data:image/jpeg;base64,${base64Content}`;
-
-        // 保存到本地文件系统
-        localImagePath = await saveImageLocally(base64Content, prompt);
-        imageUrl = `/images/generated-products/${localImagePath}`;
-
-      } else if (result.source?.url) {
-        // 如果返回URL格式，下载并保存到本地
-        localImagePath = await downloadAndSaveImage(result.source.url, prompt);
-        imageUrl = `/images/generated-products/${localImagePath}`;
-
-        // 同时保留原始URL作为备份
-        base64Data = result.source.url;
-      } else {
-        throw new Error('未收到有效的图片数据');
-      }
-
-      return NextResponse.json({
-        success: true,
-        imageUrl: imageUrl,
-        localImagePath: localImagePath,
-        originalUrl: result.source?.url || '',
-        base64Data: base64Data,
-        prompt: enhancedPrompt,
-        provider: 'Jimeng AI (MCP)',
-        taskId: result.taskId || 'unknown',
-        metadata: {
-          size,
-          scale,
-          forceSingle,
-          style,
-          generatedAt: new Date().toISOString(),
-          format: result.type,
-          savedLocally: !!localImagePath
-        },
-      });
-
-    } catch (mcpError) {
-      console.warn('Jimeng MCP调用失败，使用模拟数据:', mcpError);
-
-      // 创建一个简单的模拟图片并保存
-      const localImagePath = await createMockImage(prompt);
-      const mockImageUrl = `/images/generated-products/${localImagePath}`;
-
-      return NextResponse.json({
-        success: true,
-        imageUrl: mockImageUrl,
-        localImagePath: localImagePath,
-        base64Data: mockImageUrl,
-        prompt: enhancedPrompt,
-        provider: 'Jimeng AI (MCP - 降级模式)',
-        taskId: 'mock',
-        metadata: {
-          size,
-          scale,
-          forceSingle,
-          style,
-          generatedAt: new Date().toISOString(),
-          note: 'MCP服务暂时不可用，已创建模拟图片',
-          savedLocally: true
-        },
-      });
-    }
+    return NextResponse.json({
+      success: true,
+      imageUrl: mockImageUrl,
+      localImagePath: localImagePath,
+      base64Data: mockImageUrl,
+      prompt: enhancedPrompt,
+      provider: 'Jimeng AI (暂时禁用)',
+      taskId: 'mock',
+      metadata: {
+        size,
+        scale,
+        forceSingle,
+        style,
+        generatedAt: new Date().toISOString(),
+        note: 'MCP服务暂时禁用，已创建模拟图片',
+        savedLocally: true
+      },
+    });
 
   } catch (error) {
     console.error('Jimeng MCP 图片生成错误:', error);
