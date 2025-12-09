@@ -310,7 +310,7 @@ export default function ProductEnhancer({ product, onUpdate }: ProductEnhancerPr
           </p>
           <button
             onClick={fetchStripeProduct}
-            disabled={isLoadingStripe || product.stripe_price_id}
+            disabled={isLoadingStripe || !!product.stripe_price_id}
             className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white py-2 px-4 rounded text-sm transition-colors duration-200"
           >
             {isLoadingStripe ? '正在同步...' :
