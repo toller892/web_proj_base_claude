@@ -3,7 +3,7 @@ import Breadcrumb from './Breadcrumb';
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  title?: string;
+  title?: React.ReactNode;
   description?: string;
   showBreadcrumb?: boolean;
   breadcrumbItems?: Array<{
